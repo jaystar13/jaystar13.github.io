@@ -6,3 +6,10 @@
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+@include breakpoint(max-width ($large - 1px)) {
+    .toc__list, .nav__list {
+        display: inline-grid;
+        margin-bottom: 0 !important;
+    }
+}
