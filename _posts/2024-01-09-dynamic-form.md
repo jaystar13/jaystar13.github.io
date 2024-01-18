@@ -5,19 +5,14 @@ date:   2024-01-09 16:40:16
 description: 스프링 부트와 타임리프를 이용한 동적인 폼 요소 조회
 tags: java spring-boot thymeleaf
 categories: develope
+giscus_comments: true
+featured: true
 ---
 ### Issue
 Frontend를 개발하다 보면 form형식을 굉장히 자주 마주칩니다. 한 두개의 입력 항목만 기입하는 단순한 폼 형식부터
 경력사항 입력과 같이 여러 폼 형식을 입력하고 제출하는 리스트 형식의 폼까지 다양한 UI의 폼을 볼 수 있습니다.
 React/VueJS와 같은 CSR 방식이 아닌 thymeleaf를 이용한 SSR 방식으로 다양한 폼에 대한 효율적인 구현을 고민해보고자 합니다. 
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2024-01-09-Figure-1.jpg" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    이런 그림입니다.
-</div> 
+![예상화면](./assets/img/2024-01-09-Figure-1.jpg)
 
 ### Condition
 구현해야할 페이지는 다음과 같습니다.  
@@ -171,14 +166,7 @@ java17, spring boot 3.x, spring-mvc, thymeleaf
 
     이제 화면에서 이 값을 꺼내서 표현하기만 하면 될거 같네요.
 
-    <div class="row mt-3">
-        <div class="col-sm mt-3 mt-md-0">
-            {% include figure.html path="assets/img/2024-01-09-Figure-2.jpg" class="img-fluid rounded z-depth-1" %}
-        </div>
-    </div>
-    <div class="caption">
-        화면으로는 이렇게 구현하였습니다!
-    </div> 
+    ![화면](./assets/img/2024-01-09-Figure-2.jpg)
 
     이렇게 해서 조회기능을 완성하였습니다.
 
