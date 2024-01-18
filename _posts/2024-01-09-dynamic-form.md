@@ -10,7 +10,7 @@ featured: true
 ---
 ### Issue
 Frontend를 개발하다 보면 form형식을 굉장히 자주 마주칩니다. 한 두개의 입력 항목만 기입하는 단순한 폼 형식부터
-경력사항 입력과 같이 여러 폼 형식을 입력하고 제출하는 리스트 형식의 폼까지 다양한 UI의 폼을 볼 수 있습니다.
+경력사항 입력과 같이 여러 폼 형식을 입력하고 제출하는 리스트 형식의 폼까지 다양한 UI의 폼을 볼 수 있습니다.  
 React/VueJS와 같은 CSR 방식이 아닌 thymeleaf를 이용한 SSR 방식으로 다양한 폼에 대한 효율적인 구현을 고민해보고자 합니다.  
 
 ![예상화면](/assets/img/2024-01-09-Figure-1.jpg)
@@ -165,9 +165,70 @@ java17, spring boot 3.x, spring-mvc, thymeleaf
     테스트를 위해 `formNames`는 값을 직접 할당하였지만 화면 또는 저장소에서 값을 전달받도록 할 수도 있겠습니다.  
     서비스의 `getForms`메서드를 호출한 결과를 `model`에 세팅하였습니다.
 
-    이제 화면에서 이 값을 꺼내서 표현하기만 하면 될거 같네요.
+    이제 화면에서 이 값을 꺼내서 표현하기만 하면 될거 같네요.  
+
+    타임리프를 사용한 html구현 코드입니다.
+    ```html
+    <table>
+        <tr th:each="forms, formsStat : ${section}">
+            <td>
+                <span th:text="|Form-${formsStat.index}|"></span>
+                <table>
+                    <tr th:each="form, formStat : ${forms}">
+                        <td th:if="${form instanceof T(com.jaystar.dto.MyProfileForm)}">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span>Name:</span>
+                                        <span th:text="${form.name}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Phone Number:</span>
+                                        <span th:text="${form.phoneNumber}"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td th:if="${form instanceof T(com.jaystar.dto.MyOrderForm)}">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span>Product Name:</span>
+                                        <span th:text="${form.productName}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Quantity:</span>
+                                        <span th:text="${form.quantity}"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>    
+    ```
 
     ![화면](/assets/img/2024-01-09-Figure-2.jpg)
 
     이렇게 해서 조회기능을 완성하였습니다.
 
+### Conclusion
+Frontend와 Backend의 역할이 분리된 CSR방식의 경우,  
+각 폼의 데이터를 API형식으로 호출하여 사용할 수 있기 때문에 유연하게 처리가 가능합니다.  
+하지만 SSR의 경우,  
+화면 표시를 위해 데이터도 함께 가져와야 하기 때문에 여러가지 고민이 생기게 됩니다.  
+이번글에서는 데이터 전달 객체를 위해 상속(`MyForm`)을 사용하고  
+각 폼의 데이터 조회를 위한 서비스 호출을 위해 인터페이스(`MyFormService`)와 팩토리(`MyFormFactory`)를 사용하였습니다.  
+
+만들고 보니 몇가지 리팩터링 할 내용이 보이네요.
+  - 컨트롤러의 `forms`타입을 일급 컬렉션으로 변경할 수 있을거 같습니다.
+  - html의 타입별 if문 분기를 파일로 따로 뺄 수 있는 방법이 있을거 같네요.
+  
+다음글에서는 리팩터링을 진행해 보도록 하겠습니다.
