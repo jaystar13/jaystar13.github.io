@@ -12,7 +12,7 @@ featured: true
 Frontend를 개발하다 보면 form형식을 굉장히 자주 마주칩니다. 한 두개의 입력 항목만 기입하는 단순한 폼 형식부터
 경력사항 입력과 같이 여러 폼 형식을 입력하고 제출하는 리스트 형식의 폼까지 다양한 UI의 폼을 볼 수 있습니다.
 React/VueJS와 같은 CSR 방식이 아닌 thymeleaf를 이용한 SSR 방식으로 다양한 폼에 대한 효율적인 구현을 고민해보고자 합니다. 
-![예상화면](assets/img/2024-01-09-Figure-1.jpg)
+![예상화면](/assets/img/2024-01-09-Figure-1.jpg)
 
 ### Condition
 구현해야할 페이지는 다음과 같습니다.  
@@ -166,7 +166,7 @@ java17, spring boot 3.x, spring-mvc, thymeleaf
 
     이제 화면에서 이 값을 꺼내서 표현하기만 하면 될거 같네요.
 
-    ![화면](assets/img/2024-01-09-Figure-2.jpg)
+    ![화면](/assets/img/2024-01-09-Figure-2.jpg)
 
     이렇게 해서 조회기능을 완성하였습니다.
 
