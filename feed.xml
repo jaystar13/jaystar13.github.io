@@ -1,4 +1,196 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://jaystar13.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://jaystar13.github.io/" rel="alternate" type="text/html" hreflang="ko"/><updated>2024-01-19T05:59:20+00:00</updated><id>https://jaystar13.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Dynamic Form Search with Spring Boot + Thymeleaf</title><link href="https://jaystar13.github.io/blog/2024/dynamic-form/" rel="alternate" type="text/html" title="Dynamic Form Search with Spring Boot + Thymeleaf"/><published>2024-01-09T16:40:16+00:00</published><updated>2024-01-09T16:40:16+00:00</updated><id>https://jaystar13.github.io/blog/2024/dynamic-form</id><content type="html" xml:base="https://jaystar13.github.io/blog/2024/dynamic-form/"><![CDATA[<h3 id="issue">Issue</h3> <p>Frontend를 개발하다 보면 form형식을 굉장히 자주 마주칩니다. 한 두개의 입력 항목만 기입하는 단순한 폼 형식부터 경력사항 입력과 같이 여러 폼 형식을 입력하고 제출하는 리스트 형식의 폼까지 다양한 UI의 폼을 볼 수 있습니다.<br/> React/VueJS와 같은 CSR 방식이 아닌 thymeleaf를 이용한 SSR 방식으로 다양한 폼에 대한 효율적인 구현을 고민해보고자 합니다.</p> <p><img src="/assets/img/2024-01-09-Figure-1.jpg" alt="예상화면"/></p> <h3 id="condition">Condition</h3> <p>구현해야할 페이지는 다음과 같습니다.</p> <ul> <li>페이지는 하나 또는 둘 이상의 그룹으로 나뉘어져 있습니다.(이 그룹을 섹션이라고 하겠습니다.)</li> <li>섹션은 하나 또는 둘 이상의 폼으로 구성되어 있습니다.</li> <li>섹션은 여러개가 존재할 수 있으며 페이지를 구성하는 섹션은 설정으로 관리하고 있습니다.</li> </ul> <h3 id="plan">Plan</h3> <ul> <li> <p>반복되는 섹션과 폼을 위해서 상속과 인터페이스를 사용해야 할 것 같습니다.</p> </li> <li> <p>Factory Pattern을 사용해서 원하는 서비스를 호출하도록 합니다.</p> </li> </ul> <h3 id="spec">Spec</h3> <p>java17, spring boot 3.x, spring-mvc, thymeleaf</p> <h3 id="implementation">Implementation</h3> <ul> <li> <p>조회<br/> 구현 전 Plan 단계에서 구상한 대로 인터페이스를 만들도록 하겠습니다.<br/> <code class="language-plaintext highlighter-rouge">FormService</code>라고 이름지었고 코드는 아래처럼 단순합니다.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko"><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="https://jaystar13.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://jaystar13.github.io/" rel="alternate" type="text/html" hreflang="ko"/><updated>2024-01-20T06:46:23+00:00</updated><id>https://jaystar13.github.io/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Dynamic Form Search - Refactoring</title><link href="https://jaystar13.github.io/blog/2024/dynamic-form-refactoring/" rel="alternate" type="text/html" title="Dynamic Form Search - Refactoring"/><published>2024-01-19T15:30:16+00:00</published><updated>2024-01-19T15:30:16+00:00</updated><id>https://jaystar13.github.io/blog/2024/dynamic-form-refactoring</id><content type="html" xml:base="https://jaystar13.github.io/blog/2024/dynamic-form-refactoring/"><![CDATA[<h2 id="issue">Issue</h2> <p><a href="https://jaystar13.github.io/blog/2024/dynamic-form/">이전글</a>에서 구현했던 코드를 리팩터링 해보도록 하겠습니다.</p> <h2 id="condition">Condition</h2> <p>구현을 위한 특별한 조건은 없습니다.</p> <p>다만, <a href="https://jojoldu.tistory.com/412">일급 컬렉션</a>을 사용하기 때문에 이에 대한 지식이 필요할 수 있습니다.</p> <h2 id="plan">Plan</h2> <ul> <li>컨트롤러의 forms타입(<code class="language-plaintext highlighter-rouge">List&lt;List&lt;MyForm&gt;&gt;</code>)을 일급 컬렉션으로 변경하도록 합니다.</li> <li>html의 타입별 if문 분기를 파일로 따로 뺄 수 있도록 수정합니다.</li> </ul> <h2 id="spec">Spec</h2> <p>java17, spring boot 3.x, spring-mvc, thymeleaf</p> <h2 id="implementation">Implementation</h2> <p>컨트롤러의 <code class="language-plaintext highlighter-rouge">List&lt;List&lt;MyForm&gt;&gt; forms = service.getForms(formNames)</code> 이 부분을 보면<br/> 리스트 안에 다시 리스트가 들어있는 조금은 복잡한 구조를 가집니다.</p> <p>먼저 <code class="language-plaintext highlighter-rouge">List&lt;MyForm&gt;</code>을 DTO클래스로 변경하는 작업을 하겠습니다.</p> <h3 id="1-mysection-구현">1. MySection 구현</h3> <p>처음엔 일급 컬렉션 객체로 만들려 했지만 후술하게될 html분기문 리팩터링을 위해서<br/> Section의 고유 이름이 필요하여 멤버 변수가 두개인 DTO객체로 구현하게 되었습니다.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="nd">@Setter</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySection</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">sectionName</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">MyForm</span><span class="o">&gt;</span> <span class="n">mySection</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">MySection</span><span class="o">(</span><span class="nc">String</span> <span class="n">sectionName</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">MyForm</span><span class="o">&gt;</span> <span class="n">mySection</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">sectionName</span> <span class="o">=</span> <span class="n">sectionName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">mySection</span> <span class="o">=</span> <span class="n">mySection</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <p><code class="language-plaintext highlighter-rouge">sectionName</code>은 해당 섹션에 고유 이름을 부여하였고<br/> <code class="language-plaintext highlighter-rouge">mySection</code>으로 섹션을 구성하는 form을 참고하도록 하였습니다.</p> <p>그리고 기존에 <code class="language-plaintext highlighter-rouge">List&lt;MyForm&gt;</code>을 사용하는 곳을 이 <code class="language-plaintext highlighter-rouge">MySection</code>로 변경을 합니다.</p> <h4 id="1-1-myformservice-인터페이스-및-구현체">1-1. MyFormService 인터페이스 및 구현체</h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MyFormService</span> <span class="o">{</span>
+    <span class="nc">MySection</span> <span class="nf">getMySection</span><span class="o">();</span>
+<span class="o">}</span>  
+</code></pre></div></div> <p>메서드 이름도 하는일이 좀 더 명확하도록 변경하였습니다.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyOrderFormService</span> <span class="kd">implements</span> <span class="nc">MyFormService</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">MySection</span> <span class="nf">getMySection</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">MySection</span><span class="o">(</span><span class="s">"order"</span><span class="o">,</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="nc">MyOrderForm</span><span class="o">(</span><span class="s">"clean code"</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span>
+                <span class="k">new</span> <span class="nf">MyOrderForm</span><span class="o">(</span><span class="s">"candy"</span><span class="o">,</span> <span class="mi">10</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <p>주문 서비스에서는 <code class="language-plaintext highlighter-rouge">order</code>라는 이름으로 <code class="language-plaintext highlighter-rouge">MySection</code>을 리턴하였습니다.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyProfileFormService</span> <span class="kd">implements</span> <span class="nc">MyFormService</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">MySection</span> <span class="nf">getMySection</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">MySection</span><span class="o">(</span><span class="s">"profile"</span><span class="o">,</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">new</span> <span class="nc">MyProfileForm</span><span class="o">(</span><span class="s">"홍길동"</span><span class="o">,</span> <span class="s">"012-3456-7890"</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <p>프로필 서비스에서는 <code class="language-plaintext highlighter-rouge">profile</code>라는 이름으로 <code class="language-plaintext highlighter-rouge">MySection</code>을 리턴하였습니다.</p> <h4 id="1-2-mysections-dto-생성">1-2. MySections DTO 생성</h4> <p>서비스에서 조회한 <code class="language-plaintext highlighter-rouge">Section</code>을 리스트 형태로 가지고 있는 <code class="language-plaintext highlighter-rouge">MySections</code>를 생성하겠습니다.<br/> 이 <code class="language-plaintext highlighter-rouge">MySections</code>는 화면으로 전달되어 값을 표현하는데 사용할 수 있습니다.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="nd">@Setter</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MySections</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">MySection</span><span class="o">&gt;</span> <span class="n">sections</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">MySections</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">sections</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">add</span><span class="o">(</span><span class="nc">MySection</span> <span class="n">mySection</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">sections</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">mySection</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <p><code class="language-plaintext highlighter-rouge">MySections</code>는 일급 컬렉션객체 입니다.</p> <p>인터페이스의 메서드 명과 리턴타입을 변경하였으니<br/> 여기저기 컴파일 에러가 발생합니다.</p> <p>이제 관련된 부분을 수정해 보겠습니다.</p> <h4 id="dynamicformsearchservice">DynamicFormSearchService</h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DynamicFormSearchService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">MyFormFactory</span> <span class="n">myFormFactory</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nc">MySections</span> <span class="nf">getForms</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">serviceNames</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">MySections</span> <span class="n">sections</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MySections</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">serviceName</span> <span class="o">:</span> <span class="n">serviceNames</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">MyFormService</span> <span class="n">myFormService</span> <span class="o">=</span> <span class="n">myFormFactory</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">serviceName</span><span class="o">);</span>
+            <span class="nc">MySection</span> <span class="n">mySection</span> <span class="o">=</span> <span class="n">myFormService</span><span class="o">.</span><span class="na">getMySection</span><span class="o">();</span>
+            <span class="n">sections</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">mySection</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">sections</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <h4 id="dynamicformsearchcontroller">DynamicFormSearchController</h4> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DynamicFormSearchController</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">DynamicFormSearchService</span> <span class="n">service</span><span class="o">;</span>
+
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">"/forms"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getDynamicForms</span><span class="o">(</span><span class="nc">Model</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span><span class="o">[]</span> <span class="n">formNames</span> <span class="o">=</span> <span class="o">{</span><span class="s">"myProfileFormService"</span><span class="o">,</span> <span class="s">"myOrderFormService"</span><span class="o">};</span>
+
+        <span class="nc">MySections</span> <span class="n">sections</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">getForms</span><span class="o">(</span><span class="n">formNames</span><span class="o">);</span>
+
+        <span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"sections"</span><span class="o">,</span> <span class="n">sections</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="s">"dynamicForm"</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div> <p>모델에 전달하는 key 명칭을 <code class="language-plaintext highlighter-rouge">sections</code>로 변경하였습니다.</p> <h4 id="dynamicform">dynamicForm</h4> <p>구조가 변경되었기 때문에 html도 수정을 해줘야 합니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(...)
+<span class="nt">&lt;table&gt;</span>
+    <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"forms, formsStat : ${sections.sections}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;td&gt;</span>
+            <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"|Form-${formsStat.index}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+            <span class="nt">&lt;table&gt;</span>
+                <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"form, formStat : ${forms.mySection}"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;td</span> <span class="na">th:if=</span><span class="s">"${form instanceof T(com.jaystar.dto.MyProfileForm)}"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;table&gt;</span>
+                            <span class="nt">&lt;tr&gt;</span>
+                                <span class="nt">&lt;td&gt;</span>
+                                    <span class="nt">&lt;span&gt;</span>Name:<span class="nt">&lt;/span&gt;</span>
+                                    <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.name}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                                <span class="nt">&lt;/td&gt;</span>
+                            <span class="nt">&lt;/tr&gt;</span>
+                            <span class="nt">&lt;tr&gt;</span>
+                                <span class="nt">&lt;td&gt;</span>
+                                    <span class="nt">&lt;span&gt;</span>Phone Number:<span class="nt">&lt;/span&gt;</span>
+                                    <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.phoneNumber}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                                <span class="nt">&lt;/td&gt;</span>
+                            <span class="nt">&lt;/tr&gt;</span>
+                        <span class="nt">&lt;/table&gt;</span>
+                    <span class="nt">&lt;/td&gt;</span>
+
+                    <span class="nt">&lt;td</span> <span class="na">th:if=</span><span class="s">"${form instanceof T(com.jaystar.dto.MyOrderForm)}"</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;table&gt;</span>
+                            <span class="nt">&lt;tr&gt;</span>
+                                <span class="nt">&lt;td&gt;</span>
+                                    <span class="nt">&lt;span&gt;</span>Product Name:<span class="nt">&lt;/span&gt;</span>
+                                    <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.productName}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                                <span class="nt">&lt;/td&gt;</span>
+                            <span class="nt">&lt;/tr&gt;</span>
+                            <span class="nt">&lt;tr&gt;</span>
+                                <span class="nt">&lt;td&gt;</span>
+                                    <span class="nt">&lt;span&gt;</span>Quantity:<span class="nt">&lt;/span&gt;</span>
+                                    <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.quantity}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                                <span class="nt">&lt;/td&gt;</span>
+                            <span class="nt">&lt;/tr&gt;</span>
+                        <span class="nt">&lt;/table&gt;</span>
+                    <span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+            <span class="nt">&lt;/table&gt;</span>
+        <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+(...)
+</code></pre></div></div> <p>코드가 너무 기네요😭</p> <p>얼릉 리팩터링을 해봐야겠습니다.</p> <h3 id="html분기문-리팩터링">html분기문 리팩터링</h3> <p>dynamicForm.html 코드를 보면 <code class="language-plaintext highlighter-rouge">&lt;td th:if="${form instanceof T(com.jaystar.dto.MyProfileForm)}"&gt;</code>와 같이<br/> 타입을 검사하여 분기처리를 하고 있습니다.<br/> 이 부분은 thymeleaf가 제공하는 fragment는 이용하여 각각의 파일로 만들어 처리를 할 수 있을거 같습니다.</p> <p>thymeleaf의 fragment는 웹 페이지에서 공통으로 사용하는 파일의 재사용을 위한 기능을 제공합니다.<br/> 그렇기 때문에 우리는 각각 Section별로 별도의 html을 만들고 이를 호출하여 사용하도록 변경을 하면 좋을 것 같습니다.</p> <p>이것을 위해서 우리는 위에 <code class="language-plaintext highlighter-rouge">MySection</code>를 만들어 놓았습니다.</p> <h4 id="fragmentprofilehtml">fragment/profile.html</h4> <p>프로필을 표현하기 위한 profile파일을 생성하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">th:fragment=</span><span class="s">"section(profile)"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"form, formStat : ${profile}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;td&gt;</span>
+            <span class="nt">&lt;table&gt;</span>
+                <span class="nt">&lt;tr&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>
+                        <span class="nt">&lt;span&gt;</span>Name:<span class="nt">&lt;/span&gt;</span>
+                        <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.name}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                    <span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+                <span class="nt">&lt;tr&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>
+                        <span class="nt">&lt;span&gt;</span>Phone Number:<span class="nt">&lt;/span&gt;</span>
+                        <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.phoneNumber}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                    <span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+            <span class="nt">&lt;/table&gt;</span>
+        <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div> <h4 id="fragmentorderhtml">fragment/order.html</h4> <p>주문내역을 표현하기 위한 order파일도 생성하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Title<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">th:fragment=</span><span class="s">"section(order)"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"form, formStat : ${order}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;td&gt;</span>
+            <span class="nt">&lt;table&gt;</span>
+                <span class="nt">&lt;tr&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>
+                        <span class="nt">&lt;span&gt;</span>Product Name:<span class="nt">&lt;/span&gt;</span>
+                        <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.productName}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                    <span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+                <span class="nt">&lt;tr&gt;</span>
+                    <span class="nt">&lt;td&gt;</span>
+                        <span class="nt">&lt;span&gt;</span>Quantity:<span class="nt">&lt;/span&gt;</span>
+                        <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"${form.quantity}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+                    <span class="nt">&lt;/td&gt;</span>
+                <span class="nt">&lt;/tr&gt;</span>
+            <span class="nt">&lt;/table&gt;</span>
+        <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div> <h4 id="dynamicformhtml">dynamicForm.html</h4> <p>그리고 각각 섹션파일을 불러오기 위해 <code class="language-plaintext highlighter-rouge">dynamicForm</code> 파일을 아래와 같이 수정하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(...)
+<span class="nt">&lt;table&gt;</span>
+    <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"forms, formsStat : ${sections.sections}"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;td&gt;</span>
+            <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"|Section-${forms.sectionName}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+            <span class="nt">&lt;table</span> <span class="na">th:replace=</span><span class="s">"~{|fragment/${forms.sectionName}| :: section(${forms.mySection})}"</span><span class="nt">&gt;&lt;/table&gt;</span>
+        <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+(...)
+</code></pre></div></div> <p>처음에 비해 훨씬 깔끔해진 코드입니다.</p> <h2 id="conclusion">Conclusion</h2> <p>이제 우리는 테스트로 넣어 놓은 프로필, 주문 두개의 양식 이외에 다른 양식이 필요한 경우에도<br/> 인터페이스를 구현한 서비스와 DTO, html정도만 추가하면<br/> 기존 코드의 수정 없이 쉽게 처리할 수 있는 구조를 만들었습니다.</p> <p>다음엔 해당 양식을 제출하여 저장소까지 처리될 수 있는 구조를 알아보도록 하겠습니다.</p> <p>위 소스는 <a href="https://github.com/jaystar13/blog-code/tree/master/_2024-01-19-dynamic-form-refactor">깃헙</a>에서 확인할 수 있습니다.</p>]]></content><author><name></name></author><category term="develope"/><category term="java"/><category term="spring-boot"/><category term="thymeleaf"/><category term="refactoring"/><summary type="html"><![CDATA[스프링 부트와 타임리프를 이용한 동적인 폼 요소 조회 - 리팩토링]]></summary></entry><entry><title type="html">Dynamic Form Search with Spring Boot + Thymeleaf</title><link href="https://jaystar13.github.io/blog/2024/dynamic-form/" rel="alternate" type="text/html" title="Dynamic Form Search with Spring Boot + Thymeleaf"/><published>2024-01-09T16:40:16+00:00</published><updated>2024-01-09T16:40:16+00:00</updated><id>https://jaystar13.github.io/blog/2024/dynamic-form</id><content type="html" xml:base="https://jaystar13.github.io/blog/2024/dynamic-form/"><![CDATA[<h2 id="issue">Issue</h2> <p>Frontend를 개발하다 보면 form형식을 굉장히 자주 마주칩니다. 한 두개의 입력 항목만 기입하는 단순한 폼 형식부터 경력사항 입력과 같이 여러 폼 형식을 입력하고 제출하는 리스트 형식의 폼까지 다양한 UI의 폼을 볼 수 있습니다.<br/> React/VueJS와 같은 CSR 방식이 아닌 thymeleaf를 이용한 SSR 방식으로 다양한 폼에 대한 효율적인 구현을 고민해보고자 합니다.</p> <p><img src="/assets/img/2024-01-09-Figure-1.jpg" alt="예상화면"/></p> <h2 id="condition">Condition</h2> <p>구현해야할 페이지는 다음과 같습니다.</p> <ul> <li>페이지는 하나 또는 둘 이상의 그룹으로 나뉘어져 있습니다.(이 그룹을 섹션이라고 하겠습니다.)</li> <li>섹션은 하나 또는 둘 이상의 폼으로 구성되어 있습니다.</li> <li>섹션은 여러개가 존재할 수 있으며 페이지를 구성하는 섹션은 설정으로 관리하고 있습니다.</li> </ul> <h2 id="plan">Plan</h2> <ul> <li> <p>반복되는 섹션과 폼을 위해서 상속과 인터페이스를 사용해야 할 것 같습니다.</p> </li> <li> <p>Factory Pattern을 사용해서 원하는 서비스를 호출하도록 합니다.</p> </li> </ul> <h2 id="spec">Spec</h2> <p>java17, spring boot 3.x, spring-mvc, thymeleaf</p> <h2 id="implementation">Implementation</h2> <ul> <li> <p>조회<br/> 구현 전 Plan 단계에서 구상한 대로 인터페이스를 만들도록 하겠습니다.<br/> <code class="language-plaintext highlighter-rouge">FormService</code>라고 이름지었고 코드는 아래처럼 단순합니다.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span>
 <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MyFormService</span> <span class="o">{</span>
     <span class="nc">List</span><span class="o">&lt;</span><span class="nc">MyForm</span><span class="o">&gt;</span> <span class="nf">getMyForms</span><span class="o">();</span>
 <span class="o">}</span>
@@ -112,7 +304,7 @@
         <span class="nt">&lt;/td&gt;</span>
     <span class="nt">&lt;/tr&gt;</span>
 <span class="nt">&lt;/table&gt;</span>    
-</code></pre></div> </div> <p><img src="/assets/img/2024-01-09-Figure-2.jpg" alt="화면"/></p> <p>이렇게 해서 조회기능을 완성하였습니다.</p> </li> </ul> <h3 id="conclusion">Conclusion</h3> <p>Frontend와 Backend의 역할이 분리된 CSR방식의 경우,<br/> 각 폼의 데이터를 API형식으로 호출하여 사용할 수 있기 때문에 유연하게 처리가 가능합니다.<br/> 하지만 SSR의 경우,<br/> 화면 표시를 위해 데이터도 함께 가져와야 하기 때문에 여러가지 고민이 생기게 됩니다.<br/> 이번글에서는 데이터 전달 객체를 위해 상속(<code class="language-plaintext highlighter-rouge">MyForm</code>)을 사용하고<br/> 각 폼의 데이터 조회를 위한 서비스 호출을 위해 인터페이스(<code class="language-plaintext highlighter-rouge">MyFormService</code>)와 팩토리(<code class="language-plaintext highlighter-rouge">MyFormFactory</code>)를 사용하였습니다.</p> <p>만들고 보니 몇가지 리팩터링 할 내용이 보이네요.</p> <ul> <li>컨트롤러의 <code class="language-plaintext highlighter-rouge">forms</code>타입을 일급 컬렉션으로 변경할 수 있을거 같습니다.</li> <li>html의 타입별 if문 분기를 파일로 따로 뺄 수 있는 방법이 있을거 같네요.</li> </ul> <p>다음글에서는 리팩터링을 진행해 보도록 하겠습니다.</p> <p>위 소스는 <a href="https://github.com/jaystar13/blog-code/tree/master/_2024-01-09-dynamic-form-search">깃헙</a>에서 확인할 수 있습니다.</p>]]></content><author><name></name></author><category term="develope"/><category term="java"/><category term="spring-boot"/><category term="thymeleaf"/><summary type="html"><![CDATA[스프링 부트와 타임리프를 이용한 동적인 폼 요소 조회]]></summary></entry><entry><title type="html">a post with TikZJax</title><link href="https://jaystar13.github.io/blog/2023/tikzjax/" rel="alternate" type="text/html" title="a post with TikZJax"/><published>2023-12-12T22:25:00+00:00</published><updated>2023-12-12T22:25:00+00:00</updated><id>https://jaystar13.github.io/blog/2023/tikzjax</id><content type="html" xml:base="https://jaystar13.github.io/blog/2023/tikzjax/"><![CDATA[<p>This is an example post with TikZ code. TikZJax converts script tags (containing TikZ code) into SVGs.</p> <script type="text/tikz">
+</code></pre></div> </div> <p><img src="/assets/img/2024-01-09-Figure-2.jpg" alt="화면"/></p> <p>이렇게 해서 조회기능을 완성하였습니다.</p> </li> </ul> <h2 id="conclusion">Conclusion</h2> <p>Frontend와 Backend의 역할이 분리된 CSR방식의 경우,<br/> 각 폼의 데이터를 API형식으로 호출하여 사용할 수 있기 때문에 유연하게 처리가 가능합니다.<br/> 하지만 SSR의 경우,<br/> 화면 표시를 위해 데이터도 함께 가져와야 하기 때문에 여러가지 고민이 생기게 됩니다.<br/> 이번글에서는 데이터 전달 객체를 위해 상속(<code class="language-plaintext highlighter-rouge">MyForm</code>)을 사용하고<br/> 각 폼의 데이터 조회를 위한 서비스 호출을 위해 인터페이스(<code class="language-plaintext highlighter-rouge">MyFormService</code>)와 팩토리(<code class="language-plaintext highlighter-rouge">MyFormFactory</code>)를 사용하였습니다.</p> <p>만들고 보니 몇가지 리팩터링 할 내용이 보이네요.</p> <ul> <li>컨트롤러의 <code class="language-plaintext highlighter-rouge">forms</code>타입을 일급 컬렉션으로 변경할 수 있을거 같습니다.</li> <li>html의 타입별 if문 분기를 파일로 따로 뺄 수 있는 방법이 있을거 같네요.</li> </ul> <p><a href="https://jaystar13.github.io/blog/2024/dynamic-form-refactoring/">다음글</a>에서는 리팩터링을 진행해 보도록 하겠습니다.</p> <p>위 소스는 <a href="https://github.com/jaystar13/blog-code/tree/master/_2024-01-09-dynamic-form-search">깃헙</a>에서 확인할 수 있습니다.</p>]]></content><author><name></name></author><category term="develope"/><category term="java"/><category term="spring-boot"/><category term="thymeleaf"/><summary type="html"><![CDATA[스프링 부트와 타임리프를 이용한 동적인 폼 요소 조회]]></summary></entry><entry><title type="html">a post with TikZJax</title><link href="https://jaystar13.github.io/blog/2023/tikzjax/" rel="alternate" type="text/html" title="a post with TikZJax"/><published>2023-12-12T22:25:00+00:00</published><updated>2023-12-12T22:25:00+00:00</updated><id>https://jaystar13.github.io/blog/2023/tikzjax</id><content type="html" xml:base="https://jaystar13.github.io/blog/2023/tikzjax/"><![CDATA[<p>This is an example post with TikZ code. TikZJax converts script tags (containing TikZ code) into SVGs.</p> <script type="text/tikz">
 \begin{tikzpicture}
     \draw[red,fill=black!60!red] (0,0) circle [radius=1.5];
     \draw[green,fill=black!60!green] (0,0) circle [x radius=1.5cm, y radius=10mm];
@@ -220,6 +412,4 @@
     <span class="nt">&lt;/tr&gt;</span>
   <span class="nt">&lt;/thead&gt;</span>
 <span class="nt">&lt;/table&gt;</span>
-</code></pre></div></div> <table data-click-to-select="true" data-height="460" data-pagination="true" data-search="true" data-toggle="table" data-url="/assets/json/table_data.json"> <thead> <tr> <th data-checkbox="true"></th> <th data-field="id" data-halign="left" data-align="center" data-sortable="true">ID</th> <th data-field="name" data-halign="center" data-align="right" data-sortable="true">Item Name</th> <th data-field="price" data-halign="right" data-align="left" data-sortable="true">Item Price</th> </tr> </thead> </table>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="tables"/><summary type="html"><![CDATA[an example of how to use Bootstrap Tables]]></summary></entry><entry><title type="html">a post with table of contents</title><link href="https://jaystar13.github.io/blog/2023/table-of-contents/" rel="alternate" type="text/html" title="a post with table of contents"/><published>2023-03-20T15:59:00+00:00</published><updated>2023-03-20T15:59:00+00:00</updated><id>https://jaystar13.github.io/blog/2023/table-of-contents</id><content type="html" xml:base="https://jaystar13.github.io/blog/2023/table-of-contents/"><![CDATA[<p>This post shows how to add a table of contents in the beginning of the post.</p> <h2 id="adding-a-table-of-contents">Adding a Table of Contents</h2> <p>To add a table of contents to a post, simply add</p> <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">toc</span><span class="pi">:</span>
-  <span class="na">beginning</span><span class="pi">:</span> <span class="kc">true</span>
-</code></pre></div></div> <p>to the front matter of the post. The table of contents will be automatically generated from the headings in the post.</p> <h3 id="example-of-sub-heading-1">Example of Sub-Heading 1</h3> <p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p> <h3 id="example-of-another-sub-heading-1">Example of another Sub-Heading 1</h3> <p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p> <h2 id="table-of-contents-options">Table of Contents Options</h2> <p>If you want to learn more about how to customize the table of contents, you can check the <a href="https://github.com/toshimaru/jekyll-toc">jekyll-toc</a> repository.</p> <h3 id="example-of-sub-heading-2">Example of Sub-Heading 2</h3> <p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p> <h3 id="example-of-another-sub-heading-2">Example of another Sub-Heading 2</h3> <p>Jean shorts raw denim Vice normcore, art party High Life PBR skateboard stumptown vinyl kitsch. Four loko meh 8-bit, tousled banh mi tilde forage Schlitz dreamcatcher twee 3 wolf moon. Chambray asymmetrical paleo salvia, sartorial umami four loko master cleanse drinking vinegar brunch. <a href="https://www.pinterest.com">Pinterest</a> DIY authentic Schlitz, hoodie Intelligentsia butcher trust fund brunch shabby chic Kickstarter forage flexitarian. Direct trade <a href="https://en.wikipedia.org/wiki/Cold-pressed_juice">cold-pressed</a> meggings stumptown plaid, pop-up taxidermy. Hoodie XOXO fingerstache scenester Echo Park. Plaid ugh Wes Anderson, freegan pug selvage fanny pack leggings pickled food truck DIY irony Banksy.</p>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="toc"/><summary type="html"><![CDATA[an example of a blog post with table of contents]]></summary></entry></feed>
+</code></pre></div></div> <table data-click-to-select="true" data-height="460" data-pagination="true" data-search="true" data-toggle="table" data-url="/assets/json/table_data.json"> <thead> <tr> <th data-checkbox="true"></th> <th data-field="id" data-halign="left" data-align="center" data-sortable="true">ID</th> <th data-field="name" data-halign="center" data-align="right" data-sortable="true">Item Name</th> <th data-field="price" data-halign="right" data-align="left" data-sortable="true">Item Price</th> </tr> </thead> </table>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="tables"/><summary type="html"><![CDATA[an example of how to use Bootstrap Tables]]></summary></entry></feed>
