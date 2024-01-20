@@ -210,16 +210,15 @@ public class DynamicFormSearchController {
 얼릉 리팩터링을 해봐야겠습니다.
 
 ### html분기문 리팩터링
-dynamicForm.html 코드를 보면 `<td th:if="${form instanceof T(com.jaystar.dto.MyProfileForm)}">`와 같이  
-타입을 검사하여 분기처리를 하고 있습니다.  
-이 부분은 thymeleaf가 제공하는 fragment는 이용하여 각각의 파일로 만들어 처리를 할 수 있을거 같습니다.  
+dynamicForm.html 코드를 보면 `<td th:if="${form instanceof T(com.jaystar.dto.MyProfileForm)}">`와 같이 타입을 검사하여 분기처리를 하고 있습니다.  
+이 부분은 thymeleaf가 제공하는 fragment를 이용하여 각각의 파일로 만들어 처리를 할 수 있을거 같습니다.  
 
 thymeleaf의 fragment는 웹 페이지에서 공통으로 사용하는 파일의 재사용을 위한 기능을 제공합니다.  
-그렇기 때문에 우리는 각각 Section별로 별도의 html을 만들고 이를 호출하여 사용하도록 변경을 하면 좋을 것 같습니다.  
+이를 이용하여 우리는 각각 Section별로 별도의 html을 만들고 이를 호출하여 사용하도록 변경을 하면 좋을 것 같습니다.  
 
 이것을 위해서 우리는 위에 `MySection`를 만들어 놓았습니다.   
 
-#### fragment/profile.html
+#### fragment/profile.html 생성
 프로필을 표현하기 위한 profile파일을 생성하였습니다.  
 ```html
 <!DOCTYPE html>
@@ -253,7 +252,7 @@ thymeleaf의 fragment는 웹 페이지에서 공통으로 사용하는 파일의
 </html>
 ```
 
-#### fragment/order.html
+#### fragment/order.html 생성
 주문내역을 표현하기 위한 order파일도 생성하였습니다.  
 ```html
 <!DOCTYPE html>
@@ -287,7 +286,7 @@ thymeleaf의 fragment는 웹 페이지에서 공통으로 사용하는 파일의
 </html>
 ```
 
-#### dynamicForm.html
+#### dynamicForm.html 수정
 그리고 각각 섹션파일을 불러오기 위해 `dynamicForm` 파일을 아래와 같이 수정하였습니다.
 ```html
 (...)
