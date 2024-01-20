@@ -8,28 +8,28 @@ categories: develope
 giscus_comments: true
 featured: true
 ---
-### Issue
+## Issue
 Frontend를 개발하다 보면 form형식을 굉장히 자주 마주칩니다. 한 두개의 입력 항목만 기입하는 단순한 폼 형식부터
 경력사항 입력과 같이 여러 폼 형식을 입력하고 제출하는 리스트 형식의 폼까지 다양한 UI의 폼을 볼 수 있습니다.  
 React/VueJS와 같은 CSR 방식이 아닌 thymeleaf를 이용한 SSR 방식으로 다양한 폼에 대한 효율적인 구현을 고민해보고자 합니다.  
 
 ![예상화면](/assets/img/2024-01-09-Figure-1.jpg)
 
-### Condition
+## Condition
 구현해야할 페이지는 다음과 같습니다.  
 - 페이지는 하나 또는 둘 이상의 그룹으로 나뉘어져 있습니다.(이 그룹을 섹션이라고 하겠습니다.)
 - 섹션은 하나 또는 둘 이상의 폼으로 구성되어 있습니다.
 - 섹션은 여러개가 존재할 수 있으며 페이지를 구성하는 섹션은 설정으로 관리하고 있습니다.
 
-### Plan
+## Plan
 - 반복되는 섹션과 폼을 위해서 상속과 인터페이스를 사용해야 할 것 같습니다.  
 
 - Factory Pattern을 사용해서 원하는 서비스를 호출하도록 합니다.  
 
-### Spec
+## Spec
 java17, spring boot 3.x, spring-mvc, thymeleaf
 
-### Implementation
+## Implementation
   - 조회  
     구현 전 Plan 단계에서 구상한 대로 인터페이스를 만들도록 하겠습니다.  
     `FormService`라고 이름지었고 코드는 아래처럼 단순합니다.  
@@ -218,7 +218,7 @@ java17, spring boot 3.x, spring-mvc, thymeleaf
 
     이렇게 해서 조회기능을 완성하였습니다.
 
-### Conclusion
+## Conclusion
 Frontend와 Backend의 역할이 분리된 CSR방식의 경우,  
 각 폼의 데이터를 API형식으로 호출하여 사용할 수 있기 때문에 유연하게 처리가 가능합니다.  
 하지만 SSR의 경우,  
@@ -230,6 +230,6 @@ Frontend와 Backend의 역할이 분리된 CSR방식의 경우,
   - 컨트롤러의 `forms`타입을 일급 컬렉션으로 변경할 수 있을거 같습니다.
   - html의 타입별 if문 분기를 파일로 따로 뺄 수 있는 방법이 있을거 같네요.
   
-다음글에서는 리팩터링을 진행해 보도록 하겠습니다.
+[다음글](https://jaystar13.github.io/blog/2024/dynamic-form-refactoring/)에서는 리팩터링을 진행해 보도록 하겠습니다.
 
 위 소스는 [깃헙](https://github.com/jaystar13/blog-code/tree/master/_2024-01-09-dynamic-form-search)에서 확인할 수 있습니다.
