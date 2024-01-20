@@ -122,7 +122,7 @@
     <span class="nt">&lt;/tr&gt;</span>
 <span class="nt">&lt;/table&gt;</span>
 (...)
-</code></pre></div></div> <p>코드가 너무 기네요😭</p> <p>얼릉 리팩터링을 해봐야겠습니다.</p> <h3 id="html분기문-리팩터링">html분기문 리팩터링</h3> <p>dynamicForm.html 코드를 보면 <code class="language-plaintext highlighter-rouge">&lt;td th:if="${form instanceof T(com.jaystar.dto.MyProfileForm)}"&gt;</code>와 같이<br> 타입을 검사하여 분기처리를 하고 있습니다.<br> 이 부분은 thymeleaf가 제공하는 fragment는 이용하여 각각의 파일로 만들어 처리를 할 수 있을거 같습니다.</p> <p>thymeleaf의 fragment는 웹 페이지에서 공통으로 사용하는 파일의 재사용을 위한 기능을 제공합니다.<br> 그렇기 때문에 우리는 각각 Section별로 별도의 html을 만들고 이를 호출하여 사용하도록 변경을 하면 좋을 것 같습니다.</p> <p>이것을 위해서 우리는 위에 <code class="language-plaintext highlighter-rouge">MySection</code>를 만들어 놓았습니다.</p> <h4 id="fragmentprofilehtml">fragment/profile.html</h4> <p>프로필을 표현하기 위한 profile파일을 생성하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</code></pre></div></div> <p>코드가 너무 기네요😭</p> <p>얼릉 리팩터링을 해봐야겠습니다.</p> <h3 id="html분기문-리팩터링">html분기문 리팩터링</h3> <p>dynamicForm.html 코드를 보면 <code class="language-plaintext highlighter-rouge">&lt;td th:if="${form instanceof T(com.jaystar.dto.MyProfileForm)}"&gt;</code>와 같이 타입을 검사하여 분기처리를 하고 있습니다.<br> 이 부분은 thymeleaf가 제공하는 fragment를 이용하여 각각의 파일로 만들어 처리를 할 수 있을거 같습니다.</p> <p>thymeleaf의 fragment는 웹 페이지에서 공통으로 사용하는 파일의 재사용을 위한 기능을 제공합니다.<br> 이를 이용하여 우리는 각각 Section별로 별도의 html을 만들고 이를 호출하여 사용하도록 변경을 하면 좋을 것 같습니다.</p> <p>이것을 위해서 우리는 위에 <code class="language-plaintext highlighter-rouge">MySection</code>를 만들어 놓았습니다.</p> <h4 id="fragmentprofilehtml-생성">fragment/profile.html 생성</h4> <p>프로필을 표현하기 위한 profile파일을 생성하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
@@ -151,7 +151,7 @@
 <span class="nt">&lt;/table&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
-</code></pre></div></div> <h4 id="fragmentorderhtml">fragment/order.html</h4> <p>주문내역을 표현하기 위한 order파일도 생성하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</code></pre></div></div> <h4 id="fragmentorderhtml-생성">fragment/order.html 생성</h4> <p>주문내역을 표현하기 위한 order파일도 생성하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html</span> <span class="na">xmlns:th=</span><span class="s">"http://www.thymeleaf.org"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
@@ -180,7 +180,7 @@
 <span class="nt">&lt;/table&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
-</code></pre></div></div> <h4 id="dynamicformhtml">dynamicForm.html</h4> <p>그리고 각각 섹션파일을 불러오기 위해 <code class="language-plaintext highlighter-rouge">dynamicForm</code> 파일을 아래와 같이 수정하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(...)
+</code></pre></div></div> <h4 id="dynamicformhtml-수정">dynamicForm.html 수정</h4> <p>그리고 각각 섹션파일을 불러오기 위해 <code class="language-plaintext highlighter-rouge">dynamicForm</code> 파일을 아래와 같이 수정하였습니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(...)
 <span class="nt">&lt;table&gt;</span>
     <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"forms, formsStat : ${sections.sections}"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;td&gt;</span>
