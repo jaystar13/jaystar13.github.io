@@ -8,7 +8,7 @@ categories: develope
 giscus_comments: true
 featured: true
 ---
-## 1.Opening
+## 1. Opening
 스프링 부트와 타임리프를 이용한 동적인 폼 요소 제출 방식을 알아보도록 합니다.  
 이 글을 읽기 전에 아래 글을 참고해주세요.
 - [Dynamic Form Search with Spring Boot + Thymeleaf](https://jaystar13.github.io/blog/2024/dynamic-form/)
@@ -26,7 +26,7 @@ featured: true
 ### Spec
 java17, spring boot 3.x, spring-mvc, thymeleaf
 
-## 2.Implementation
+## 2. Implementation
 본격적인 구현전에 기존 소스를 조금 리팩터링 하도록 하겠습니다.  
 조회와 제출을 같이 하려다 보니 섹션에 대한 정의(또는 설정)가 필요하게 되어 Enum 객체를 만들 필요게 되었습니다.
 
@@ -187,7 +187,7 @@ public interface MyFormService {
 ```
 이렇게 수정을 해서 동적인 폼에 대한 제출 방법 구현도 마무리 하도록 하겠습니다.  
 
-## Closing
+## 3. Closing
 동적인 폼 양식 처리를 위한 조회 및 제출 방법에 대해  
 몇개의 글을 통하여 알아보았습니다.  
 
