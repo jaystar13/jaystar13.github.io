@@ -4,7 +4,7 @@ title:  Dynamic Form Search - Refactoring
 date:   2024-01-19 15:30:16
 description: 스프링 부트와 타임리프를 이용한 동적인 폼 요소 조회 - 리팩토링
 tags: java spring-boot thymeleaf refactoring
-categories: develope
+categories: develop
 giscus_comments: true
 featured: true
 ---

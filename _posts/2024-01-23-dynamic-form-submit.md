@@ -4,7 +4,7 @@ title:  Dynamic Form Submit
 date:   2024-01-23 07:20:00
 description: 스프링 부트와 타임리프를 이용한 동적인 폼 요소 제출
 tags: java spring-boot thymeleaf
-categories: develope
+categories: develop
 giscus_comments: true
 featured: true
 ---
