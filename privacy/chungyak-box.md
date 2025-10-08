@@ -69,8 +69,8 @@ Firebase 및 Google AdMob을 통해 수집된 데이터는 각 서비스의 정�
 ## 7. 개인정보 보호책임자
 청약계산소는 개인정보 보호 관련 문의사항을 처리하기 위해 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
 
-- 성명: 홍길동  
-- 이메일: support@cheongyakbox.com  
+- 성명: 이재성  
+- 이메일: rasccolii@gmail.com  
 
 ---
 
