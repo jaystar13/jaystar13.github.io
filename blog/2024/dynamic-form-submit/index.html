@@ -24,38 +24,37 @@
 <span class="o">}</span>
 </code></pre></div></div> <p>저희는 현재 profile과 order 두가지의 폼 양식이 있기 때문에 이 두가지만 정의하였습니다.<br> 만일 폼 양식이 더 늘어나게 된다면 여기 DTO에 추가를 해야하는 구조입니다.</p> <hr> <p>spring-mvc는 클라이언트에서 입력한 input 값을 전달받기 위해 다양한 방식의 기능을 제공하고 있습니다.<br> html의 name속성에서 정의한 값을 기준으로 우리가 만든 객체에 매핑을 자동으로 도와주는 기능도 있습니다.<br> java bean property를 사용하기 때문에 name속성 값과 DTO에서 정의한 필드 이름을 맞춰주어야 합니다.<br> (사실 정확히 말하자면 필드 이름이 아닌 getter/setter 메서드 이름이지만 통상적으로 필드이름과 getter/setter이름을 맞추기 때문에 필드 이름이라고 말씀드렸습니다.)</p> <h4 id="2-3-html-name속성-정의">2-3. html name속성 정의</h4> <p>기존 단순 문자출력 항목을 input 타입으로 변경하고 name속성을 정의하도록 합니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(...)
 <span class="nt">&lt;table</span> <span class="na">th:fragment=</span><span class="s">"section(profile)"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"form, formStat : ${profile}"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;td&gt;</span>
-            <span class="nt">&lt;table&gt;</span>
-                <span class="nt">&lt;tr&gt;</span>
-                    <span class="nt">&lt;td&gt;</span>
-                        <span class="nt">&lt;span&gt;</span>Name:<span class="nt">&lt;/span&gt;</span>
-                        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">th:value=</span><span class="s">"${form.name}"</span> <span class="na">th:name=</span><span class="s">"|profiles[${formStat.index}].name|"</span><span class="nt">&gt;</span>
-                    <span class="nt">&lt;/td&gt;</span>
-                <span class="nt">&lt;/tr&gt;</span>
-                <span class="nt">&lt;tr&gt;</span>
-                    <span class="nt">&lt;td&gt;</span>
-                        <span class="nt">&lt;span&gt;</span>Phone Number:<span class="nt">&lt;/span&gt;</span>
-                        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">th:value=</span><span class="s">"${form.phoneNumber}"</span>
-                               <span class="na">th:name=</span><span class="s">"|profiles[${formStat.index}].phoneNumber|"</span><span class="nt">&gt;</span>
-                    <span class="nt">&lt;/td&gt;</span>
-                <span class="nt">&lt;/tr&gt;</span>
-            <span class="nt">&lt;/table&gt;</span>
-        <span class="nt">&lt;/td&gt;</span>
-    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"form, formStat : ${profile}"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;td&gt;</span>
+      <span class="nt">&lt;table&gt;</span>
+        <span class="nt">&lt;tr&gt;</span>
+          <span class="nt">&lt;td&gt;</span>
+            <span class="nt">&lt;span&gt;</span>Name:<span class="nt">&lt;/span&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">th:value=</span><span class="s">"${form.name}"</span> <span class="na">th:name=</span><span class="s">"|profiles[${formStat.index}].name|"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;/tr&gt;</span>
+        <span class="nt">&lt;tr&gt;</span>
+          <span class="nt">&lt;td&gt;</span>
+            <span class="nt">&lt;span&gt;</span>Phone Number:<span class="nt">&lt;/span&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">th:value=</span><span class="s">"${form.phoneNumber}"</span> <span class="na">th:name=</span><span class="s">"|profiles[${formStat.index}].phoneNumber|"</span> <span class="nt">/&gt;</span>
+          <span class="nt">&lt;/td&gt;</span>
+        <span class="nt">&lt;/tr&gt;</span>
+      <span class="nt">&lt;/table&gt;</span>
+    <span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
 <span class="nt">&lt;/table&gt;</span>
 (...)
 </code></pre></div></div> <p>타임리프의 <code class="language-plaintext highlighter-rouge">th:name</code>을 이용하여 값을 정의하였습니다.</p> <p><code class="language-plaintext highlighter-rouge">order.html</code>도 위와 동일하게 변경하도록 합니다.</p> <p>그리고 우리는 폼을 제출해야 하기 때문에 <code class="language-plaintext highlighter-rouge">dynamicForm.html</code> 파일도 수정을 해야합니다.</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(...)
 <span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"dynamicForm"</span> <span class="na">action=</span><span class="s">"/forms"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;table&gt;</span>
-        <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"section, sectionStat : ${sections.sections}"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;td&gt;</span>
-                <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"|Section-${section.sectionItem.key}"</span><span class="nt">&gt;&lt;/span&gt;</span>
-                <span class="nt">&lt;table</span> <span class="na">th:replace=</span><span class="s">"~{|fragment/${section.sectionItem.key}| :: section(${section.myForms.myForms})}"</span><span class="nt">&gt;&lt;/table&gt;</span>
-            <span class="nt">&lt;/td&gt;</span>
-        <span class="nt">&lt;/tr&gt;</span>
-    <span class="nt">&lt;/table&gt;</span>
-    <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>Submit<span class="nt">&lt;/button&gt;</span>
+  <span class="nt">&lt;table&gt;</span>
+    <span class="nt">&lt;tr</span> <span class="na">th:each=</span><span class="s">"section, sectionStat : ${sections.sections}"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;td&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">th:text=</span><span class="s">"|Section-${section.sectionItem.key}"</span><span class="nt">&gt;&lt;/span&gt;</span>
+        <span class="nt">&lt;table</span> <span class="na">th:replace=</span><span class="s">"~{|fragment/${section.sectionItem.key}| :: section(${section.myForms.myForms})}"</span><span class="nt">&gt;&lt;/table&gt;</span>
+      <span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;/tr&gt;</span>
+  <span class="nt">&lt;/table&gt;</span>
+  <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"submit"</span><span class="nt">&gt;</span>Submit<span class="nt">&lt;/button&gt;</span>
 <span class="nt">&lt;/form&gt;</span>
 (...)
 </code></pre></div></div> <h4 id="2-4-controller-수정">2-4. Controller 수정</h4> <p>이제 폼 제출을 Controller에서 받을 수 있도록 해봅시다.</p> <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="o">(...)</span>
