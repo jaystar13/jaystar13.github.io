@@ -29,14 +29,15 @@ Location: 대한민국
 현재 그룹사의 HR시스템과 채용시스템을 개발 및 운영하고 있습니다.  
 코드를 보는 것/만드는 것을 좋아하고 리팩토링에 관심이 많습니다.
 
+_Business Skill_
 
-*Business Skill*
- - 인사, 조직, 급여, 평가, 복리후생 등의 HR모듈
- - 채용 홈페이지 관리 및 입사지원(ATS)
+- 인사, 조직, 급여, 평가, 복리후생 등의 HR모듈
+- 채용 홈페이지 관리 및 입사지원(ATS)
 
-*Tech Skill*
- - Java Developer
- - BE: java, python
- - FE: jsp, thymeleaf, vuejs, react, flutter
- - Tool: spring/spring boot, anyframe, fastapi
- - Database: Oracle, MySql, Firebase
+_Tech Skill_
+
+- Java Developer
+- BE: java, python
+- FE: jsp, thymeleaf, vuejs, react, flutter
+- Tool: spring/spring boot, anyframe, fastapi
+- Database: Oracle, MySql, Firebase
