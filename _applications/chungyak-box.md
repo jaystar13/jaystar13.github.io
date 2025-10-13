@@ -34,12 +34,8 @@ category: 경제
     iPhone 6.5인치 기준 스크린샷 예시
 </div>
 
-<br>
-<div>
-    <strong>아직 공식 출시 전이며, 곧 App Store에서 만나보실 수 있습니다.</strong>
-</div>
 <div class="mt-3">
-    <a class="btn btn-primary" href="#" target="_blank">App Store에서 보기</a>
+    <a class="btn btn-primary" href="https://apps.apple.com/us/app/%EC%B2%AD%EC%95%BD%EA%B3%84%EC%82%B0%EC%86%8C/id6753172518" target="_blank">App Store에서 보기</a>
 </div>
 <hr class="my-4">
 <div>
