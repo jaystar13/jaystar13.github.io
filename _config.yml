@@ -172,7 +172,7 @@ kramdown:
       start_line: 1
 
 # Includes & excludes
-include: ["_pages", "_scripts", "privacy"]
+include: ["_pages", "_scripts", "privacy", "app-ads.txt"]
 exclude:
   - bin/
   - CONTRIBUTING.md
