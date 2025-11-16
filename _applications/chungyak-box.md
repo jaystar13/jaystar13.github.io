@@ -12,21 +12,21 @@ category: 경제
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/screenshot_1.png" title="청약계산소 메인화면" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot1.png" title="청약계산소 메인화면" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/screenshot_2.png" title="간단한 입력" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot2.png" title="간단한 입력" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/screenshot_3.png" title="납입일 변경" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot3.png" title="납입일 변경" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/screenshot_4.png" title="회차별 상세" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot4.png" title="회차별 상세" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/screenshot_5.png" title="납입일 일괄변경" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot5.png" title="납입일 일괄변경" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -36,6 +36,9 @@ category: 경제
 
 <div class="mt-3">
     <a class="btn btn-primary" href="https://apps.apple.com/us/app/%EC%B2%AD%EC%95%BD%EA%B3%84%EC%82%B0%EC%86%8C/id6753172518" target="_blank">App Store에서 보기</a>
+</div>
+<div class="mt-3">
+    <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.jaystar.chungyakbox" target="_blank">Google Play Store에서 보기</a>
 </div>
 <hr class="my-4">
 <div>
