@@ -5,6 +5,7 @@ description: 내 청약 인정회차를 한눈에!
 img: assets/img/chungyak_box/icon.png
 importance: 1
 category: 경제
+keywords: "청약계산소, 쳥약 인정회차, 청약 인정금액, 청약 계산기, 공공분양, LH, SH"
 # related_publications: true
 ---
 
