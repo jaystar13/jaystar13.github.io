@@ -13,22 +13,25 @@ keywords: "청약계산소, 쳥약 인정회차, 청약 인정금액, 청약 계
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot1.png" title="청약계산소 메인화면" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_2/screenshot1.jpg" title="청약계산소 메인화면" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot2.png" title="간단한 입력" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_2/screenshot2.jpg" title="간단한 입력" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot3.png" title="납입일 변경" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_2/screenshot3.jpg" title="납입일 변경" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot4.png" title="회차별 상세" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_2/screenshot4.jpg" title="회차별 상세" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/chungyak_box/v1_1/screenshot5.png" title="납입일 일괄변경" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/chungyak_box/v1_2/screenshot5.jpg" title="납입일 일괄변경" class="img-fluid rounded z-depth-1" %}
     </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/chungyak_box/v1_2/screenshot6.jpg" title="나의 청약내역" class="img-fluid rounded z-depth-1" %}
+    </div>    
 </div>
 
 <div class="caption">
