@@ -39,7 +39,7 @@ keywords: "청약계산소, 쳥약 인정회차, 청약 인정금액, 청약 계
 </div>
 
 <div class="mt-3">
-    <a class="btn btn-primary" href="https://apps.apple.com/us/app/%EC%B2%AD%EC%95%BD%EA%B3%84%EC%82%B0%EC%86%8C/id6753172518" target="_blank">App Store에서 보기</a>
+    <a class="btn btn-primary" href="https://apps.apple.com/kr/app/%EC%B2%AD%EC%95%BD%EA%B3%84%EC%82%B0%EC%86%8C/id6753172518" target="_blank">App Store에서 보기</a>
 </div>
 <div class="mt-3">
     <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.jaystar.chungyakbox" target="_blank">Google Play Store에서 보기</a>
