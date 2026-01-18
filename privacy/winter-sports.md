@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 청약박스 개인정보처리방침
+title: Fan-Pulse 개인정보처리방침
 permalink: /privacy/winter-sports
 ---
 
