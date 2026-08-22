@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/applications/";
           },
-        },{id: "post-dynamic-form-submit",
+        },{id: "post-hr시스템은-사람을-무엇으로-보고-있을까",
+        
+          title: "HR시스템은 사람을 무엇으로 보고 있을까?",
+        
+        description: "HR 시스템이 갖춰야 할 기준 - 철학",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/hris-philosophy/";
+          
+        },
+      },{id: "post-dynamic-form-submit",
         
           title: "Dynamic Form Submit",
         
