@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/applications/";
           },
-        },{id: "post-hr시스템은-사람을-무엇으로-보고-있을까",
+        },{id: "post-hr-시스템의-사용자는-누구인가",
+        
+          title: "HR 시스템의 사용자는 누구인가",
+        
+        description: "그리고 생산자는 누구인가",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/hris-users/";
+          
+        },
+      },{id: "post-hr시스템은-사람을-무엇으로-보고-있을까",
         
           title: "HR시스템은 사람을 무엇으로 보고 있을까?",
         
