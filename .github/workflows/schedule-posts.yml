@@ -2,9 +2,12 @@ name: Publish posts scheduled for today
 
 on:
   schedule:
-    # Run every day at 23:30 UTC or manually run
-    - cron: "30 23 * * *"
+    # Run every day at 15:00 UTC (00:00 KST) or manually run
+    - cron: "0 15 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   publish_scheduled:
@@ -17,7 +20,7 @@ jobs:
 
       - name: Get the date for today
         id: date
-        run: echo "TODAY=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+        run: echo "TODAY=$(TZ=Asia/Seoul date +'%Y-%m-%d')" >> $GITHUB_ENV
 
       - name: Check for scheduled posts and move to posts
         run: |
