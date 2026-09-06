@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/applications/";
           },
-        },{id: "post-hr-시스템의-사용자는-누구인가",
+        },{id: "post-hr-시스템의-범위는-어디까지인가",
+        
+          title: "HR 시스템의 범위는 어디까지인가",
+        
+        description: "콘도 추첨은 HR일까",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/hris-scope/";
+          
+        },
+      },{id: "post-hr-시스템의-사용자는-누구인가",
         
           title: "HR 시스템의 사용자는 누구인가",
         
