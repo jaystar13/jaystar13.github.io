@@ -59,6 +59,12 @@ on:
       - "!FAQ.md"
       - "!INSTALL.md"
       - "!README.md"
+  # 예약 발행 워크플로가 GITHUB_TOKEN으로 푸시하면 push 이벤트가 발생하지 않으므로
+  # 해당 워크플로의 종료를 직접 감지해서 배포한다
+  workflow_run:
+    workflows: ["Publish posts scheduled for today"]
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -68,9 +74,14 @@ jobs:
   deploy:
     # available images: https://github.com/actions/runner-images#available-images
     runs-on: ubuntu-latest
+    # 예약 발행이 실패한 경우에는 배포하지 않는다
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v7
+        with:
+          # workflow_run 으로 실행될 때는 자동 커밋이 반영된 main 최신 상태를 받아야 한다
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || '' }}
       - name: Setup Ruby 💎
         uses: ruby/setup-ruby@v1
         with:
