@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/applications/";
           },
-        },{id: "post-hr-시스템의-범위는-어디까지인가",
+        },{id: "post-조직장에게-주어진-단-하나의-버튼-왜-결재만-남았을까",
+        
+          title: "조직장에게 주어진 단 하나의 버튼, 왜 결재만 남았을까?",
+        
+        description: "조직장은 시스템에서 무엇을 할 수 있는가",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/hris-leaders/";
+          
+        },
+      },{id: "post-hr-시스템의-범위는-어디까지인가",
         
           title: "HR 시스템의 범위는 어디까지인가",
         
