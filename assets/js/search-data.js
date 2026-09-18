@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/applications/";
           },
-        },{id: "post-조직장에게-주어진-단-하나의-버튼-왜-결재만-남았을까",
+        },{id: "post-경영진이-보는-숫자는-어디서-오는가",
+        
+          title: "경영진이 보는 숫자는 어디서 오는가",
+        
+        description: "아무도 열지 않는 대시보드",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/hris-dashboard/";
+          
+        },
+      },{id: "post-조직장에게-주어진-단-하나의-버튼-왜-결재만-남았을까",
         
           title: "조직장에게 주어진 단 하나의 버튼, 왜 결재만 남았을까?",
         
