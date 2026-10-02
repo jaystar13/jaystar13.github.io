@@ -23,7 +23,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/applications/";
           },
-        },{id: "post-매년-변경되는-평가-누구를-위한-변화인가",
+        },{id: "post-유연의-대가",
+        
+          title: "유연의 대가",
+        
+        description: "설정의 역설",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/hris-flexibility/";
+          
+        },
+      },{id: "post-매년-변경되는-평가-누구를-위한-변화인가",
         
           title: "매년 변경되는 평가, 누구를 위한 변화인가?",
         
